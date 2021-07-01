@@ -33,15 +33,15 @@ public class GuidedMoveBehavior : IMovable
 
             if (targetToMove.activeInHierarchy == true && distance > m_reachDistance)
             {
-                
                 obj.transform.position = Vector3.MoveTowards(curPosition, targetPosition, Speed);
             }
             else 
             {
-                targetToMove = null;
                 OnFinishingMove?.Invoke(obj);
+                targetToMove = null;
             }
         }
+        else OnFinishingMove?.Invoke(obj);
     }
     public void PointToTarget(GameObject target)
     {

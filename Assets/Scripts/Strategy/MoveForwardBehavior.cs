@@ -16,7 +16,7 @@ public class MoveForwardBehavior : IMovable
     float boundsDistance;
 
     public MoveForwardBehavior(GameObject gameObject, float speed = 0.1f, float reachDistance = 0.1f, 
-        float boundsDistance = 100f)
+        float boundsDistance = 75f)
     {
         this.gameObject = gameObject;
         respawn = gameObject.transform.position;
@@ -56,7 +56,7 @@ public class MoveForwardBehavior : IMovable
         return false;
     }
 
-    public virtual void PointToTarget(GameObject target)
+    public void PointToTarget(GameObject target)
     {
         // Ручной указатель на цель.
         destination = target.transform.position;

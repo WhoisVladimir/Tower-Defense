@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour, IDamager
         if(!other.gameObject.CompareTag("Respawn")) returnable.ResetPosition(gameObject);
         if (other.gameObject.CompareTag("Enemy")) 
         {
-            gameObject.SetActive(false);
+            returnable.ResetPosition(gameObject);
         } 
     }
 

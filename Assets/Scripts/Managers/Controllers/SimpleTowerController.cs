@@ -31,11 +31,11 @@ public class SimpleTowerController : TowerController
     private void Shooter_OnShot(GameObject sender, GameObject target)
     {
         // активаци€ снар€да дл€ запуска.
-        ActivateProjectile(sender, target);
+        ActivateProjectile(target);
         projectile.SetActive(true);
     }
 
-    void ActivateProjectile(GameObject sender, GameObject target)
+    void ActivateProjectile(GameObject target)
     {
         // ѕолучение снар€да из пула.
         if (GameManager.Instance.CurrentGameState == GameManager.GameState.IN_GAME)
@@ -44,13 +44,13 @@ public class SimpleTowerController : TowerController
             Projectile projectileLogic = projectile.GetComponent<Projectile>();
             if (!projectileLogic.IsInitialize)
             {
-                GetProjectileBehavior(sender, target);
+                GetProjectileBehavior(target);
                 projectileLogic.InitializeProjectile(movable, resetPosition, projectileDamage);
             }
-            movable.PointToTarget(target);
+            else projectileLogic.Movable.PointToTarget(target);
         }
     }
-    void GetProjectileBehavior(GameObject sender, GameObject target)
+    void GetProjectileBehavior(GameObject target)
     {
         // »нициализаци€ стратегий снар€да.
         movable = new GuidedMoveBehavior(projectile, target, speed: 0.2f);

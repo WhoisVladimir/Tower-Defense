@@ -8,6 +8,8 @@ public class CannonTowerController : TowerController
     IReturnable resetPosition;
     IMovable movable;
     IShooterable shooterable;
+
+    Projectile projectileLogic;
     int projectileDamage = 10;
 
     public CannonTowerController(GameObject projectile, GameObject tower, GameObject projectileRespawn)
@@ -39,7 +41,7 @@ public class CannonTowerController : TowerController
     {
         // Активация снаряда для запуска.
         ActivateProjectile();
-        movable.PointToTarget(target);
+        projectileLogic.Movable.PointToTarget(target);
         projectile.SetActive(true);
     }
 
@@ -49,7 +51,7 @@ public class CannonTowerController : TowerController
         if (GameManager.Instance.CurrentGameState == GameManager.GameState.IN_GAME)
         {
             projectile = projPool.GetObjectFromPool();
-            Projectile projectileLogic = projectile.GetComponent<Projectile>();
+            projectileLogic = projectile.GetComponent<Projectile>();
             if (!projectileLogic.IsInitialize)
             {
                 GetProjectileBehavior();
