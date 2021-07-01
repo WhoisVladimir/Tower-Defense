@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootBehaviour : IShooterable
+public class SimpleShootBehaviour : IShooterable
 {
     public event GameObjectsInteractionDelegate OnShot;
+    public event TriggerDelegate OnTriggerAction;
+
     GameObject gameObject;
     GameObject target;
     float range;
     float shootInterval;
     float timer;
-    public ShootBehaviour(GameObject gameObject, IDetector detector, float range = 20f, float shootInterval = 0.5f)
+
+    public SimpleShootBehaviour(GameObject gameObject, IDetector detector, float range = 20f, float shootInterval = 0.5f)
     {
         this.gameObject = gameObject;
         this.range = range;
@@ -18,10 +21,11 @@ public class ShootBehaviour : IShooterable
         timer = shootInterval;
         detector.OnDetection += GetTarget;
     }
-    private void GetTarget(GameObject sender, GameObject target)
+    private void GetTarget(GameObject sender, GameObject target, Vector3 direction, float speed)
     {
         this.target = target;
     }
+
     public void Shoot()
     {
 
@@ -31,11 +35,15 @@ public class ShootBehaviour : IShooterable
 
             if (distance < range + 1 && timer >= shootInterval) 
             {
-                Debug.Log($"On shoot {gameObject.name} to {target.name} {target.GetInstanceID()}");
                 OnShot?.Invoke(gameObject, target);
                 timer = 0f;
             }
         }
         timer += Time.deltaTime;
+    }
+
+    public void GetProjectileData(IMovable movable)
+    {
+        throw new System.NotImplementedException();
     }
 }

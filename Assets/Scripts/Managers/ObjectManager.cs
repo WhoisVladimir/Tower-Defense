@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 
@@ -28,21 +27,25 @@ public class ObjectManager : Singleton<ObjectManager>
     {
         TowerController cannon = GetTower(TowerType.ShootingFirearm);
         TowerController magicCrystal = GetTower(TowerType.ShootingMagic);
+        
         EnemiesController evilCapsule = GetEnemy(MonsterType.PeacefulPasserby);
+
         cannon.Start();
         magicCrystal.Start();
+        
         evilCapsule.Start();
         StartCoroutine(SpawnEnemies(evilCapsule));
     }
 
     TowerController GetTower(TowerType type)
     {
+        // Возвращает доступный тип башни.
         switch (type)
         {
             case TowerType.ShootingMagic:
-                return new ShootingTowerController(magicProjectile, magicTower, guidedStartPoint, type);
+                return new MagicTowerController(magicProjectile, magicTower, guidedStartPoint);
             case TowerType.ShootingFirearm:
-                return new ShootingTowerController(cannonProjectile, cannonTower, cannonStartPoint, type);
+                return new CannonTowerController(cannonProjectile, cannonTower, cannonStartPoint);
             default:
                 Debug.Log("Unknown type");
                 return null;
@@ -51,11 +54,11 @@ public class ObjectManager : Singleton<ObjectManager>
 
     EnemiesController GetEnemy(MonsterType type)
     {
+        // Возвращает доступный тип монстра.
         switch (type)
         {
             case MonsterType.PeacefulPasserby:
-                return new EnemiesController(capsuleMonster, endPoint);
-
+                return new PeacefulEnemyController(capsuleMonster, endPoint);
             default:
                 Debug.Log("Unknown type");
                 return null;
@@ -64,7 +67,8 @@ public class ObjectManager : Singleton<ObjectManager>
 
     IEnumerator SpawnEnemies(EnemiesController controller)
     {
-        while (true)
+        //Спавн монстров.
+        while (GameManager.Instance.CurrentGameState == GameManager.GameState.IN_GAME)
         {
             controller.SpawnLoop();
             yield return new WaitForSeconds(3);

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class Monster : MonoBehaviour, IDamager
@@ -23,7 +22,6 @@ public class Monster : MonoBehaviour, IDamager
     {
         if (other.gameObject.CompareTag("Projectile")) 
         {
-            Debug.Log($"{gameObject.name} {gameObject.GetInstanceID()} take damage from {other.gameObject.name}.");
             attackable.TakeDamage(other.gameObject.GetComponent<IDamager>());
         } 
     }
@@ -31,10 +29,10 @@ public class Monster : MonoBehaviour, IDamager
     public void InitializeMonster(IAttackable attackable, IMovable movable,
         IReturnable returnable, IDetector detector, int damage = 0)
     {
-        if (attackable != null) this.attackable = attackable;
-        if (movable != null) this.movable = movable;
-        if (returnable != null) this.returnable = returnable;
-        if (detector != null) this.detector = detector;
+        this.attackable = attackable;
+        this.movable = movable;
+        this.returnable = returnable;
+        this.detector = detector;
         Damage = damage;
         IsInitialize = true;
         detector?.DetectTarget();

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TakingDamageBehavior : IAttackable
 {
     public event GameObjectActionDelegate OnDeath;
+    public event TriggerDelegate OnTriggerAction;
 
     GameObject gameObject;
     public bool IsInitialize { get; set; }

@@ -3,47 +3,45 @@ using UnityEngine;
 public class GuidedMoveBehavior : IMovable
 {
     public event GameObjectActionDelegate OnFinishingMove;
+    public event TriggerDelegate OnTriggerAction;
+
     public bool IsInitialize { get; set; }
     public float Speed { get; private set; }
 
     const float m_reachDistance = 0.1f;
     GameObject obj;
     GameObject targetToMove;
-    GameObject currentTarget;
     Vector3 targetPosition;
-    Vector3 translation;
-    bool isOnTheWay = false;
+    Vector3 curPosition;
 
-    public GuidedMoveBehavior(GameObject obj, IDetector detector, float speed = 0.5f)
+    public GuidedMoveBehavior(GameObject obj, GameObject target, float speed = 0.5f)
     {
         this.obj = obj;
         Speed = speed;
-        detector.OnDetection += DetectTarget;
+        targetToMove = target;
     }
     public void Move()
     {
-        if(currentTarget != null)
+        if(targetToMove != null)
         {
-            isOnTheWay = true;
-            Vector3 curPosition = obj.transform.position;
-            targetPosition = currentTarget.transform.position;
+            curPosition = obj.transform.position;
+            targetPosition = targetToMove.transform.position;
+            float distance = Vector3.Distance(targetPosition, curPosition);
 
-            if (currentTarget.activeInHierarchy == true && Vector3.Distance(curPosition, targetPosition) > m_reachDistance)
+            if (targetToMove.activeInHierarchy == true && distance > m_reachDistance)
             {
-                translation = targetPosition - curPosition;
-                translation = translation.normalized * Speed;
-                obj.transform.Translate(translation);
+                
+                obj.transform.position = Vector3.MoveTowards(curPosition, targetPosition, Speed);
             }
             else 
             {
+                targetToMove = null;
                 OnFinishingMove?.Invoke(obj);
-                isOnTheWay = false;
             }
         }
     }
-    void DetectTarget(GameObject sender, GameObject target)
+    public void PointToTarget(GameObject target)
     {
         targetToMove = target;
-        if (isOnTheWay == false) currentTarget = target;
     }
 }

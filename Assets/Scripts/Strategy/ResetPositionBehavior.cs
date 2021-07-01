@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ResetPositionBehavior : IReturnable
 {
+    public event TriggerDelegate OnTriggerAction;
+
     IMovable movable;
     IAttackable attackable;
     GameObject obj;
@@ -19,6 +21,8 @@ public class ResetPositionBehavior : IReturnable
         if (movable != null) movable.OnFinishingMove += ResetPosition;
         if (attackable != null) attackable.OnDeath += ResetPosition;
     }
+
+
     public void ResetPosition(GameObject sender)
     {
             sender.SetActive(false);

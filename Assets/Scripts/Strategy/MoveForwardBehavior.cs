@@ -4,6 +4,8 @@ public class MoveForwardBehavior : IMovable
 {
     public float Speed { get; private set; }
     public event GameObjectActionDelegate OnFinishingMove;
+    public event TriggerDelegate OnTriggerAction;
+
     GameObject gameObject;
     Vector3 respawn;
     Vector3 destination;
@@ -12,12 +14,11 @@ public class MoveForwardBehavior : IMovable
     float reachDistance;
     float boundsDistance;
 
-    public MoveForwardBehavior(GameObject gameObject, IDetector detector, float speed = 0.1f, float reachDistance = 0.1f, 
+    public MoveForwardBehavior(GameObject gameObject, float speed = 0.1f, float reachDistance = 0.1f, 
         float boundsDistance = 100f)
     {
         this.gameObject = gameObject;
         respawn = gameObject.transform.position;
-        detector.OnDetection += SetDestinationPoint;
         Speed = speed;
         this.reachDistance = reachDistance;
         this.boundsDistance = boundsDistance;
@@ -28,6 +29,7 @@ public class MoveForwardBehavior : IMovable
         float distance = Vector3.Distance(curPosition, destination);
         if ( distance > reachDistance)
         {
+            direction = (destination - respawn).normalized;
             translation = direction * Speed;
             gameObject.transform.Translate(translation);
             if (WentBeyondBoundaries(curPosition))
@@ -39,11 +41,9 @@ public class MoveForwardBehavior : IMovable
         {
             OnFinishingMove?.Invoke(gameObject);
         }
-
     }
     public bool WentBeyondBoundaries(Vector3 curPos)
     {
-
         float distance = Vector3.Distance(respawn, curPos);
         if (distance > boundsDistance)
         {
@@ -51,9 +51,9 @@ public class MoveForwardBehavior : IMovable
         }
         return false;
     }
-    void SetDestinationPoint(GameObject sender, GameObject target)
+
+    public virtual void PointToTarget(GameObject target)
     {
         destination = target.transform.position;
-        direction = (destination - respawn).normalized;
     }
 }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class SmartTower : MonoBehaviour
@@ -18,9 +16,9 @@ public class SmartTower : MonoBehaviour
 
     public void InitializeTower(IDetector detector, IShooterable shooter, IAttackable attackable)
     {
-        if (detector != null) this.Detector = detector;
-        if (shooter != null) this.Shooter = shooter;
-        if (attackable != null) this.Attackable = attackable;
+        this.Detector = detector;
+        this.Shooter = shooter;
+        this.Attackable = attackable;
         IsInitialize = true;
     }
 

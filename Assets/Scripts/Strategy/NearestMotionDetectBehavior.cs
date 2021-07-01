@@ -2,11 +2,19 @@ using UnityEngine;
 
 public class NearestMotionDetectBehavior : IDetector
 {
-    public event GameObjectsInteractionDelegate OnDetection;
-    GameObject obj;
+    public event DetectionDelegate OnDetection;
+    public event TriggerDelegate OnTriggerAction;
+
     public GameObject Target { get; private set; }
+
+    GameObject obj;
     Vector3 center;
+    Vector3 startPosition;
+    Vector3 direction;
     float range;
+    float targetSpeed;
+    bool wasAnalyzed = false;
+
     public NearestMotionDetectBehavior(GameObject obj, float range = 20f)
     {
         this.obj = obj;
@@ -35,19 +43,28 @@ public class NearestMotionDetectBehavior : IDetector
                     }
                 }
                 Target = colliders[num].gameObject;
-                Debug.Log($"{obj.name} aim {Target.name} {Target.GetInstanceID()}");
-                OnDetection?.Invoke(obj, Target);
+                startPosition = Target.transform.position;
             }
         }
         else if (Target !=null)
         {
+            if (wasAnalyzed == false) GetTargetData();
+
             float distance = Vector3.Distance(obj.transform.position, Target.transform.position);
             if(distance > range + 1 || Target.activeInHierarchy == false)
             {
                 Target = null;
+                wasAnalyzed = false;
             }
         }
     }
-        
 
+    private void GetTargetData()
+    {
+        Vector3 curPosition = Target.transform.position;
+        direction = (curPosition - startPosition).normalized;
+        targetSpeed = Vector3.Distance(curPosition, startPosition);
+        wasAnalyzed = true;
+        OnDetection?.Invoke(obj, Target, direction, targetSpeed);
+    }
 }
