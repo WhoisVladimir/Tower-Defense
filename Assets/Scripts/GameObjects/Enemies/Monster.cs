@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour, IDamager
 {
+    // Моно-класс для связи с префабом монстра.
+
     IAttackable attackable;
     IMovable movable;
     IReturnable returnable;

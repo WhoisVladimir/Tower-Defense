@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MoveForwardBehavior : IMovable
 {
+    //Реализация стратегии движения. Предполагает простое движение вперёд, к указанной цели.
     public float Speed { get; private set; }
     public event GameObjectActionDelegate OnFinishingMove;
     public event TriggerDelegate OnTriggerAction;
@@ -25,6 +26,8 @@ public class MoveForwardBehavior : IMovable
     }
     public void Move()
     {
+        // Движение по прямой в указанную точку.
+
         Vector3 curPosition = gameObject.transform.position;
         float distance = Vector3.Distance(curPosition, destination);
         if ( distance > reachDistance)
@@ -44,6 +47,7 @@ public class MoveForwardBehavior : IMovable
     }
     public bool WentBeyondBoundaries(Vector3 curPos)
     {
+        // Проверка на выход за границы.
         float distance = Vector3.Distance(respawn, curPos);
         if (distance > boundsDistance)
         {
@@ -54,6 +58,7 @@ public class MoveForwardBehavior : IMovable
 
     public virtual void PointToTarget(GameObject target)
     {
+        // Ручной указатель на цель.
         destination = target.transform.position;
     }
 }

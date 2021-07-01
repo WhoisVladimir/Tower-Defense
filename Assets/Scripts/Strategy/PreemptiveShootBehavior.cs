@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PreemptiveShootBehavior : IShooterable
 {
+    //Реализация стратегии стрельбы. Вычисляет траекторию упреждения на основе полученных данных.
+
     public event GameObjectsInteractionDelegate OnShot;
     public event TriggerDelegate OnTriggerAction;
 
@@ -25,6 +27,8 @@ public class PreemptiveShootBehavior : IShooterable
     }
     void GetTarget(GameObject sender, GameObject target, Vector3 direction, float speed)
     {
+        // Получение информации о цели извне.
+
         this.target = target;
         targetDirection = direction;
         targetSpeed = speed;
@@ -33,21 +37,25 @@ public class PreemptiveShootBehavior : IShooterable
 
     public void GetProjectileData(IMovable movable)
     {
+        //Получение информации о скорости снаряда.
+
         projectileSpeed = movable.Speed;
     }
 
     void CalculatePreemtivePosition()
     {
+        //Расчёт упреждающей траектории. 
+
         Vector3 targetPosition = target.transform.position;
         Vector3 shotPosition = gameObject.transform.position; 
         float distanceToZero = Vector3.Distance(targetPosition, shotPosition);
         float time = distanceToZero / projectileSpeed;
         float targetDistance = time * targetSpeed;
-        Vector3 endPoint = targetDirection * targetDistance + targetPosition;
         aim.transform.position = ((targetDistance / distanceToZero) * targetDistance * targetDirection) + targetPosition;  
     }
     public void Shoot()
     {
+        // Проверка допуска к стрельбе.
         if (target != null && target.activeInHierarchy)
         {
             float distance = Vector3.Distance(gameObject.transform.position, target.transform.position);

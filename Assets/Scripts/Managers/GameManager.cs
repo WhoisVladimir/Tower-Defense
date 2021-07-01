@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public delegate void SceneChange(string sceneName);
 public class GameManager : Singleton<GameManager>
 {
+    // Стартовый класс, предполагающий реализацию загрузки сцен и основных менеджеров.
+
     public static event SceneChange OnSceneChange;
 
     public enum GameState

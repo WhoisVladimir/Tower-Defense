@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ObjectPool
 {
+    // Пул объектов, предполагающий повторное использование объектов на сцене.
+
     GameObject targetObj;
     List<GameObject> pool = new List<GameObject>();
 
@@ -16,6 +18,8 @@ public class ObjectPool
 
     public GameObject GetObjectFromPool()
     {
+        // Выдача объекта по запросу.
+
         foreach(var item in pool)
         {
             if (!item.activeInHierarchy) 

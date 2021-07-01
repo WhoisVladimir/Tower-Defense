@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class EnemiesController 
 {
+    // Абстрактный общий класс врагов.
     protected GameObject enemy;
     protected GameObject endPoint;
     protected ObjectPool enemiesPool;

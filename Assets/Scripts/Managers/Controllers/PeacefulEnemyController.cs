@@ -14,6 +14,8 @@ public class PeacefulEnemyController : EnemiesController
 
     public override void SpawnLoop()
     {
+        // Спавн монстров.
+
         if (GameManager.Instance.CurrentGameState == GameManager.GameState.IN_GAME)
         {
             GameObject monsterInst = enemiesPool.GetObjectFromPool();

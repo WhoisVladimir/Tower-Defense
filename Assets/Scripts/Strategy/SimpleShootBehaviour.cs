@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SimpleShootBehaviour : IShooterable
 {
+    //Стратегия стрельбы. Реализует простую стрельбу.
+
     public event GameObjectsInteractionDelegate OnShot;
     public event TriggerDelegate OnTriggerAction;
 

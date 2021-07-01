@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class NearestMotionDetectBehavior : IDetector
 {
+    // Реализация стратегии отслеживания. Отслеживает ближайшую цель, анализирует её, и сообщает о событии.
+
     public event DetectionDelegate OnDetection;
     public event TriggerDelegate OnTriggerAction;
 
@@ -23,6 +25,7 @@ public class NearestMotionDetectBehavior : IDetector
     }
     public void DetectTarget()
     {
+        // Обнаружение ближайшей цели.
         if (Target == null)
         {
             int maxColliders = 5;
@@ -46,21 +49,25 @@ public class NearestMotionDetectBehavior : IDetector
                 startPosition = Target.transform.position;
             }
         }
-        else if (Target !=null)
+        else 
         {
             if (wasAnalyzed == false) GetTargetData();
-
-            float distance = Vector3.Distance(obj.transform.position, Target.transform.position);
-            if(distance > range + 1 || Target.activeInHierarchy == false)
-            {
-                Target = null;
-                wasAnalyzed = false;
-            }
+            ZeroingTarget();
         }
     }
-
+    private void ZeroingTarget()
+    {
+        // Сброс цели.
+        float distance = Vector3.Distance(obj.transform.position, Target.transform.position);
+        if (distance > range + 1 || Target.activeInHierarchy == false)
+        {
+            Target = null;
+            wasAnalyzed = false;
+        }
+    }
     private void GetTargetData()
     {
+        // Анализ данных цели.
         Vector3 curPosition = Target.transform.position;
         direction = (curPosition - startPosition).normalized;
         targetSpeed = Vector3.Distance(curPosition, startPosition);

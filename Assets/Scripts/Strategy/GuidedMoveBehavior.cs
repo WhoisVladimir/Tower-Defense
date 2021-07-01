@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GuidedMoveBehavior : IMovable
 {
+    // Реализация стратегии движения. Предполагает преследование цели.
+
     public event GameObjectActionDelegate OnFinishingMove;
     public event TriggerDelegate OnTriggerAction;
 
@@ -22,6 +24,7 @@ public class GuidedMoveBehavior : IMovable
     }
     public void Move()
     {
+        // Самонаводящееся движение снаряда за целью.
         if(targetToMove != null)
         {
             curPosition = obj.transform.position;
@@ -42,6 +45,7 @@ public class GuidedMoveBehavior : IMovable
     }
     public void PointToTarget(GameObject target)
     {
+        // Ручной указатель на цель.
         targetToMove = target;
     }
 }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public abstract class TowerController
 {
+    // Общий абстрактный класс поведения башен.
+
     protected GameObject projectile;
     protected GameObject tower;
     protected GameObject projectileRespawn;

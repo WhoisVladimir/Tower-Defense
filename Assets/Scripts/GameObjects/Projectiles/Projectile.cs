@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour, IDamager
 {
+    //Моно-класс для связи с префабом снаряда.
     public IMovable Movable { get; private set; }
     IReturnable returnable;
     public int Damage { get; private set; }
@@ -16,7 +17,7 @@ public class Projectile : MonoBehaviour, IDamager
     }
     public void InitializeProjectile(IMovable movable, IReturnable returnable, int damage = 0)
     {
-        this.Movable = movable;
+        Movable = movable;
         this.returnable = returnable;
         Damage = damage;
         IsInitialize = true;

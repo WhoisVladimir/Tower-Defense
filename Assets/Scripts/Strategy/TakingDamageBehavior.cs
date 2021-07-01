@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TakingDamageBehavior : IAttackable
 {
+    //Стратегия получения урона. Реализует простое вхождение урона.
+
     public event GameObjectActionDelegate OnDeath;
     public event TriggerDelegate OnTriggerAction;
 
@@ -21,6 +23,7 @@ public class TakingDamageBehavior : IAttackable
 
     public void TakeDamage(IDamager damager)
     {
+        // Вхождение урона.
         currHP -= damager.Damage;
         if (currHP <= 0) 
         {

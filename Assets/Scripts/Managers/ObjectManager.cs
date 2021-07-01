@@ -14,6 +14,8 @@ public enum MonsterType
 
 public class ObjectManager : Singleton<ObjectManager>
 {
+    //Класс-фасад, отвечающий за контроллеры объектов сцены.
+
     [SerializeField] GameObject capsuleMonster;
     [SerializeField] GameObject cannonProjectile;
     [SerializeField] GameObject magicProjectile;
@@ -43,7 +45,7 @@ public class ObjectManager : Singleton<ObjectManager>
         switch (type)
         {
             case TowerType.ShootingMagic:
-                return new MagicTowerController(magicProjectile, magicTower, guidedStartPoint);
+                return new SimpleTowerController(magicProjectile, magicTower, guidedStartPoint);
             case TowerType.ShootingFirearm:
                 return new CannonTowerController(cannonProjectile, cannonTower, cannonStartPoint);
             default:

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CannonTowerController : TowerController
 {
+    // Класс реализующий поведение башни, стреляющей на упреждение.
+
     IDetector towDetection;
     IReturnable resetPosition;
     IMovable movable;
@@ -28,12 +30,14 @@ public class CannonTowerController : TowerController
 
     private void Shooterable_OnTriggerAction()
     {
+        // Активация снаряда, для получения информации о нём.
         ActivateProjectile();
         shooterable.GetProjectileData(movable);
     }
 
     private void Shooterable_OnShot(GameObject sender, GameObject target)
     {
+        // Активация снаряда для запуска.
         ActivateProjectile();
         movable.PointToTarget(target);
         projectile.SetActive(true);
@@ -41,6 +45,7 @@ public class CannonTowerController : TowerController
 
     void ActivateProjectile()
     {
+        // Активация снаряда из пула объектов.
         if (GameManager.Instance.CurrentGameState == GameManager.GameState.IN_GAME)
         {
             projectile = projPool.GetObjectFromPool();
@@ -54,6 +59,7 @@ public class CannonTowerController : TowerController
     }
     void GetProjectileBehavior()
     {
+        // Инициализация стратегий снаряда.
         movable = new MoveForwardBehavior(projectile, speed: 0.2f, reachDistance: 0);
         resetPosition = new ResetPositionBehavior(projectile, movable, null);
     }
