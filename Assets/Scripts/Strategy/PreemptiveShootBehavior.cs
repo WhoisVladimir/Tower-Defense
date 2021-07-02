@@ -49,9 +49,14 @@ public class PreemptiveShootBehavior : IShooterable
         Vector3 targetPosition = target.transform.position;
         Vector3 shotPosition = gameObject.transform.position; 
         float distanceToZero = Vector3.Distance(targetPosition, shotPosition);
-        float time = distanceToZero / projectileSpeed;
-        float targetDistance = time * targetSpeed;
-        aim.transform.position = ((targetDistance / distanceToZero) * targetDistance * targetDirection) + targetPosition;  
+        Vector3 direct = targetPosition - shotPosition;
+        Vector3 targetVelocity = targetDirection * targetSpeed;
+       
+        float targetMoveAngle = Vector3.Angle(-direct, targetVelocity) * Mathf.Deg2Rad;
+        float shootAngle = Mathf.Asin(Mathf.Sin(targetMoveAngle) * targetVelocity.magnitude / projectileSpeed);
+        
+        aim.transform.position = targetPosition + targetVelocity * distanceToZero / Mathf.Sin(
+            Mathf.PI - targetMoveAngle - shootAngle) * Mathf.Sin(shootAngle) / targetVelocity.magnitude;
     }
     public void Shoot()
     {

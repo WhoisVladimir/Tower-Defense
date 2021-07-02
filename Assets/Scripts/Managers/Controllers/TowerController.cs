@@ -10,11 +10,10 @@ public abstract class TowerController
 
     protected ObjectPool projPool;
 
-    public TowerController(GameObject projectile, GameObject tower, GameObject projectileRespawn)
+    public TowerController(GameObject projectile, GameObject tower)
     {
         this.projectile = projectile;
         this.tower = tower;
-        this.projectileRespawn = projectileRespawn;
     }
     public virtual void Start()
     {
@@ -24,8 +23,8 @@ public abstract class TowerController
 
     protected virtual void InstantiateWeaponSystem()
     {
-        tower = Object.Instantiate(tower);
-        projectileRespawn = Object.Instantiate(projectileRespawn);
+        tower = GameObject.Instantiate(tower);
+        projectileRespawn = tower.transform.GetChild(0).gameObject;
         projectile.transform.position = projectileRespawn.transform.position;
     }
 

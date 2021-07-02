@@ -10,8 +10,8 @@ public class SimpleTowerController : TowerController
     IShooterable towerAttack;
     int projectileDamage = 10;
 
-    public SimpleTowerController(GameObject projectile, GameObject tower, GameObject projectileRespawn)
-        : base(projectile, tower, projectileRespawn)
+    public SimpleTowerController(GameObject projectile, GameObject tower)
+        : base(projectile, tower)
     {
     }
     protected override void InitializeSystem()

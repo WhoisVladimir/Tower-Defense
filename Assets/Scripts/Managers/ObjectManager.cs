@@ -21,8 +21,6 @@ public class ObjectManager : Singleton<ObjectManager>
     [SerializeField] GameObject magicProjectile;
     [SerializeField] GameObject magicTower;
     [SerializeField] GameObject cannonTower;
-    [SerializeField] GameObject cannonStartPoint;
-    [SerializeField] GameObject guidedStartPoint;
     [SerializeField] GameObject endPoint;
 
     private void Start()
@@ -45,9 +43,9 @@ public class ObjectManager : Singleton<ObjectManager>
         switch (type)
         {
             case TowerType.ShootingMagic:
-                return new SimpleTowerController(magicProjectile, magicTower, guidedStartPoint);
+                return new SimpleTowerController(magicProjectile, magicTower);
             case TowerType.ShootingFirearm:
-                return new CannonTowerController(cannonProjectile, cannonTower, cannonStartPoint);
+                return new CannonTowerController(cannonProjectile, cannonTower);
             default:
                 Debug.Log("Unknown type");
                 return null;

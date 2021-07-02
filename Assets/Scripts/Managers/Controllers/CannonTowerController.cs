@@ -12,8 +12,8 @@ public class CannonTowerController : TowerController
     Projectile projectileLogic;
     int projectileDamage = 10;
 
-    public CannonTowerController(GameObject projectile, GameObject tower, GameObject projectileRespawn)
-        : base(projectile, tower, projectileRespawn)
+    public CannonTowerController(GameObject projectile, GameObject tower)
+        : base(projectile, tower)
     {
     }
   
